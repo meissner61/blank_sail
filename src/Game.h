@@ -8,9 +8,20 @@
 
 #include "Shapes.h"
 // #include "Camera.h"
-#include "Ent.h"
+
 
 #include "Boat.h"
+
+struct sPoint2D
+{
+    float x;
+    float y;
+};
+
+struct sSpline
+{
+    std::vector<sPoint2D> points;
+};
 
 class Game
 {
@@ -64,7 +75,8 @@ private:
     uint32_t lastTime = 0;
 
 
-
+    sSpline path;
+    
 
     float zoomScale = 1.0f;
 

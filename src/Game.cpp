@@ -50,6 +50,8 @@ if( SDL_Init(SDL_INIT_EVERYTHING) != 0 )
         return;
     }
 
+    sail::ShapeManager::GetInstance().Init(m_renderer);
+
     secondsSinceStart = 1;
 
     m_active = true;
@@ -63,6 +65,8 @@ void Game::Setup()
     frames = 0;
 
     sail::Timer::Instance().GetLastFrameTime();
+
+    path.points = {{10,41}, {40,41}, {70,41}, {100,41}};
 }
 
 void Game::Run()
@@ -130,7 +134,7 @@ void Game::Input()
 
 void Game::Update()
 {
-    //SDL_Delay(1);
+    SDL_Delay(1);
 
     sail::InputManager::GetInstance().Update();
 }
@@ -141,6 +145,20 @@ void Game::Render()
     //SDL_SetRenderDrawColor(m_renderer, 50, 50, 50, 255);
     SDL_SetRenderDrawColor(m_renderer, 99, 155, 255, 255);
     SDL_RenderClear(m_renderer);
+
+
+    //TODO: Try a porabola: y = -(1x-1)^2 + 1
+
+    for(float i = -100; i < 100; i+= 0.0001)
+    {
+        sail::ShapeManager::GetInstance().DrawRectF(i + 400.0f, i*i + 100.0f, 1, 1);
+    }
+
+    for(int i = 0; i < path.points.size(); i++)
+    {
+        sail::ShapeManager::GetInstance().DrawRectF(path.points[i].x, path.points[i].y, 10,10);
+        sail::ShapeManager::GetInstance().DrawRectF(path.points[i].x, path.points[i].y, 1,1, {255, 255, 0});
+    }
 
   
 
