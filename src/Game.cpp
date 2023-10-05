@@ -67,6 +67,8 @@ void Game::Setup()
     sail::Timer::Instance().GetLastFrameTime();
 
     path.points = {{10,41}, {40,41}, {70,41}, {100,41}};
+
+    std::cout << "Point size: " << path.points.size() << std::endl;
 }
 
 void Game::Run()
@@ -102,6 +104,7 @@ void Game::Input()
 
     while(SDL_PollEvent(&sdlEvent))
     {
+        sail::InputManager::GetInstance().Update(sdlEvent);
         if(sdlEvent.type == SDL_QUIT)
         {
             m_active = false;
@@ -136,7 +139,26 @@ void Game::Update()
 {
     SDL_Delay(1);
 
-    sail::InputManager::GetInstance().Update();
+    SDL_GetMouseState(&mouseX, &mouseY);
+
+
+//Grab the control points
+    for(int i = 0; i < path.points.size(); i++)
+    {
+        int halfWidth = pointWidth / 2;
+        if(mouseX >= path.points[i].x - halfWidth  && mouseX <= (path.points[i].x - halfWidth) + pointWidth && mouseY >= path.points[i].y - halfWidth && mouseY <= (path.points[i].y- halfWidth) + pointWidth)
+        {
+            if(sail::InputManager::GetInstance().IsMouseLeftDown())
+            {
+                path.points[i].x = mouseX;
+                path.points[i].y = mouseY;
+            }
+        }
+    }
+
+
+
+    
 }
 
 void Game::Render()
@@ -149,19 +171,34 @@ void Game::Render()
 
     //TODO: Try a porabola: y = -(1x-1)^2 + 1
 
-    for(float i = -100; i < 100; i+= 0.0001)
+    // for(float i = -100; i < 100; i+= 0.01)
+    // {
+    //     sail::ShapeManager::GetInstance().DrawRectF(i + 400.0f, i*i + 100.0f, 1, 1);
+    // }
+
+    if(sail::InputManager::GetInstance().IsMousePressed(SDL_BUTTON_LEFT))
     {
-        sail::ShapeManager::GetInstance().DrawRectF(i + 400.0f, i*i + 100.0f, 1, 1);
+        std::cout << "Mouse press\n";
+        std::cout << mouseX << " " << mouseY <<"\n";
     }
 
+    for(float t = 0.0f; t < 1.0f; t += 0.005f)
+    {
+        sPoint2D pos = path.GetSplinePoint(t);
+        sail::ShapeManager::GetInstance().DrawRectF(pos.x, pos.y, 1, 1, {255, 255, 255});
+    }
+
+//draw control points
     for(int i = 0; i < path.points.size(); i++)
     {
-        sail::ShapeManager::GetInstance().DrawRectF(path.points[i].x, path.points[i].y, 10,10);
-        sail::ShapeManager::GetInstance().DrawRectF(path.points[i].x, path.points[i].y, 1,1, {255, 255, 0});
+        int xStart = path.points[i].x - (pointWidth/2);
+        int yStart = path.points[i].y - (pointWidth/2);
+        sail::ShapeManager::GetInstance().DrawRectF(xStart,yStart, pointWidth, pointWidth, {255,0,0} );
+        sail::ShapeManager::GetInstance().DrawRectF(path.points[i].x, path.points[i].y, 1,1, {255,255,0});
     }
 
   
-
+    sail::InputManager::GetInstance().PostUpdate();
     //Stop Drawing stuff here and present 
     SDL_RenderSetScale(m_renderer, zoomScale, zoomScale);
     //SDL_RenderSetViewport(m_renderer, &viewport);
