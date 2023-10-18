@@ -1,0 +1,13 @@
+{
+"textureID"
+"animation name"
+number of frames for this animation
+row# (row 1 = 0)
+}
+
+{
+"skelly_full"
+"idle"
+11
+0
+}

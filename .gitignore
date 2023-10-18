@@ -48,7 +48,7 @@ intermediate/
 .vscode/
 
 # Tests
-scripts/
+#scripts/
 
 # Local Files that are being worked on
 src/Camera.h
