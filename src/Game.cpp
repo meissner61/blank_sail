@@ -66,7 +66,9 @@ void Game::Setup()
 
     sail::Timer::Instance().GetLastFrameTime();
 
-    path.points = {{10,41}, {40,41}, {70,41}, {100,41}};
+    //path.points = {{10,41}, {40,41}, {70,41}, {100,41}};
+
+    path.points = {{100,410},{200,410},{300,410} , {400,410}, {500,410} , {600,410} ,{700,410},{800,410} ,{900,410},{1000,410}};
 
     std::cout << "Point size: " << path.points.size() << std::endl;
 }
@@ -182,7 +184,7 @@ void Game::Render()
         std::cout << mouseX << " " << mouseY <<"\n";
     }
 
-    for(float t = 0.0f; t < 1.0f; t += 0.005f)
+    for(float t = 0.0f; t < (float)path.points.size() - 3.0f; t += 0.005f)
     {
         sPoint2D pos = path.GetSplinePoint(t);
         sail::ShapeManager::GetInstance().DrawRectF(pos.x, pos.y, 1, 1, {255, 255, 255});

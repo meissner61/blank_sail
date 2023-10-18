@@ -30,6 +30,8 @@ struct sSpline //Catmull-Rom spline
         p3 = p2 + 1;
         p0 = p1 - 1;
 
+        t = t - (int)t;
+
         float tt = t * t;
         float ttt = tt * t;
 
