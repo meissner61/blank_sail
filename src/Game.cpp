@@ -98,6 +98,7 @@ void Game::Input()
 
     while(SDL_PollEvent(&sdlEvent))
     {
+        sail::InputManager::GetInstance().Update(sdlEvent);
         if(sdlEvent.type == SDL_QUIT)
         {
             m_active = false;
@@ -132,7 +133,7 @@ void Game::Update()
 {
     //SDL_Delay(1);
 
-    sail::InputManager::GetInstance().Update();
+    
 }
 
 void Game::Render()
@@ -144,6 +145,7 @@ void Game::Render()
 
   
 
+    sail::InputManager::GetInstance().PostUpdate();
     //Stop Drawing stuff here and present 
     SDL_RenderSetScale(m_renderer, zoomScale, zoomScale);
     //SDL_RenderSetViewport(m_renderer, &viewport);
