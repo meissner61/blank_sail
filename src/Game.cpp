@@ -50,6 +50,8 @@ if( SDL_Init(SDL_INIT_EVERYTHING) != 0 )
         return;
     }
 
+    sail::ShapeManager::GetInstance().Init(m_renderer);
+
     secondsSinceStart = 1;
 
     m_active = true;
