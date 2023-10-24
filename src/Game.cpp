@@ -112,6 +112,14 @@ void Game::Input()
             {
                 SDL_Log("Window Focus Loss!");
             }
+            if(sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) //SDL_WINDOWEVENT_RESIZED //SDL_WINDOWEVENT_SIZE_CHANGED
+            {
+                SDL_Log("Window Resized!");
+                SDL_GetWindowSize(m_window, &m_windowWidth, &m_windowHeight);
+                std::cout << "Window Width: " << m_windowWidth << std::endl;
+                std::cout << "Window Height: " << m_windowHeight << std::endl;
+
+            }
         }
 
       
