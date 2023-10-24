@@ -50,6 +50,9 @@ if( SDL_Init(SDL_INIT_EVERYTHING) != 0 )
         return;
     }
 
+    //init the shapeManager with the renderer
+    sail::ShapeManager::GetInstance().Init(m_renderer);
+
     secondsSinceStart = 1;
 
     m_active = true;
@@ -63,6 +66,22 @@ void Game::Setup()
     frames = 0;
 
     sail::Timer::Instance().GetLastFrameTime();
+
+    m_output = new int[m_windowWidth * m_windowHeight];
+    m_state = new int[m_windowWidth * m_windowHeight];
+
+    memset(m_output, 0, m_windowWidth * m_windowHeight * sizeof(int));
+    memset(m_state, 0, m_windowWidth * m_windowHeight * sizeof(int));
+
+    //randomly set each state to true or false
+
+    srand(time(NULL));
+    for(int i = 1; i < m_windowWidth * m_windowHeight - 1; i++)
+    {
+        m_state[i] = rand() % 2;
+    }
+
+    //auto set = [&](int x, int y, )
 }
 
 void Game::Run()
@@ -131,7 +150,7 @@ void Game::Input()
 
 void Game::Update()
 {
-    //SDL_Delay(1);
+    SDL_Delay(50);
 
     
 }
@@ -140,9 +159,48 @@ void Game::Render()
 {
     //Set background color and clear the renderer
     //SDL_SetRenderDrawColor(m_renderer, 50, 50, 50, 255);
-    SDL_SetRenderDrawColor(m_renderer, 99, 155, 255, 255);
+    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
     SDL_RenderClear(m_renderer);
 
+    //lambda function
+    auto cell = [&](int x, int y)
+    {
+        return m_output[ y * m_windowWidth + x];
+    };
+
+    //store output state
+    for(int i = 0; i < m_windowWidth * m_windowHeight; i++)
+    {
+        m_output[i] = m_state[i];
+    }
+
+    for(int x = 1; x < m_windowWidth - 1; x++)
+    {
+        for(int y = 1; y < m_windowHeight - 1; y++)
+        {
+            int neighbors = cell(x - 1, y - 1) + cell(x - 0, y - 1) + cell(x + 1, y - 1) + 
+                            cell(x - 1, y + 0) +        0           + cell(x + 1, y + 0) + 
+                            cell(x - 1, y + 1) + cell(x + 0, y + 1) + cell(x + 1, y + 1);
+
+            if(cell(x,y) == 1)
+            {
+                m_state[y * m_windowWidth + x] = neighbors == 2 || neighbors == 3;
+            }
+            else
+            {
+                m_state[y * m_windowWidth + x] = neighbors == 3;
+            }
+
+            if(cell(x,y) == 1)
+            {
+                sail::ShapeManager::GetInstance().DrawRect(x, y, 1, 1, {255, 255, 255, 255});
+            }
+            else
+            {
+                sail::ShapeManager::GetInstance().DrawRect(x, y, 1, 1, {0, 0, 0, 255});
+            }
+        }
+    }
   
 
     sail::InputManager::GetInstance().PostUpdate();
