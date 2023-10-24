@@ -32,6 +32,7 @@ public:
     void TimeUpdates(); //TODO: Remove and use sail::Util::CalculateFPS
 
     void SetWindowTitle(const char* newTitle);
+    void PrintWindowEvents(const SDL_Event* event);
     
 
     SDL_Renderer* GetRenderer();
