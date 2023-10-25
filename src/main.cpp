@@ -49,14 +49,7 @@ int main(int argc, char* argv[])
         std::cout << "See Util.h -> root_path\n";
     }
 
-    Random rand;
 
-    for(int i = 0; i < 100; i++)
-    {
-        int a = rand.Next(-100, 100);
-        std::cout << a << std::endl;
-
-    }
     
     
 

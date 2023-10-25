@@ -30,6 +30,11 @@ uint32_t Random::operator() ()
     return Next();
 }
 
+uint32_t Random::operator() (uint32_t max)
+{
+    return Next(max);
+}
+
 uint32_t Random::operator() (uint32_t min, uint32_t max)
 {
     return Next(min, max);
