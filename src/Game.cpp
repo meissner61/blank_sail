@@ -84,7 +84,7 @@ void Game::Setup()
     {
         //m_state[i] = rand() % 2; //bad rand
         m_state[i] = rand(0,1);
-        m_state[i] = 1;
+        //m_state[i] = 1;
         //print debug states
         // if(i % 100 == 0)
         //     printf("State %d = %d\n",i, m_state[i]);
@@ -150,13 +150,13 @@ void Game::Input()
                     printf("P pressed\n");
                     //Random rand;
                     //m_state[rand(0,m_windowWidth * m_windowHeight)] = 1;
-                    //zoomScale += 1.0f;
+                    zoomScale += 1.0f;
                     break;
                 }
                 case SDLK_l:
                 {
                     printf("L pressed\n");
-                    //zoomScale -= 1.0f;
+                    zoomScale -= 1.0f;
                     break;
                 }
 
@@ -186,13 +186,15 @@ void Game::Update()
 
 void Game::Render()
 {
+
     //Set background color and clear the renderer
     //SDL_SetRenderDrawColor(m_renderer, 50, 50, 50, 255);
     SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
     SDL_RenderClear(m_renderer);
 
+
     //lambda function
-    auto cell = [&](int x, int y)
+    auto cell = [&](int x, int y) -> int&
     {
         return m_output[ y * m_windowWidth + x];
     };
@@ -202,6 +204,14 @@ void Game::Render()
     {
         m_output[i] = m_state[i];
 
+    }
+
+    if(sail::InputManager::GetInstance().IsMouseLeftDown())
+    {
+        int x {0};
+        int y{0};
+        SDL_GetMouseState(&x, &y);
+        cell(x,y) = 1;
     }
 
     for(int x = 1; x < m_windowWidth - 1; x++)
@@ -231,22 +241,19 @@ void Game::Render()
                 //sail::ShapeManager::GetInstance().DrawRect(x, y, 1, 1, {0, 0, 0, 255});
             }
 
-            if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_SPACE))
-            {
-                //system("Pause");
-                //SDL_Delay(100);
-                printf("Space  pressed\n");
-            }
         }
     }
+
   
 
-    sail::InputManager::GetInstance().PostUpdate();
+
     //Stop Drawing stuff here and present 
     SDL_RenderSetScale(m_renderer, zoomScale, zoomScale);
     //SDL_RenderSetViewport(m_renderer, &viewport);
     SDL_RenderPresent(m_renderer);
-    
+
+
+        sail::InputManager::GetInstance().PostUpdate();
 }
 
 void Game::calculateFPS()
