@@ -6,6 +6,7 @@
 #include "Timer.h"
 #include "InputManager.h"
 #include "GlyphManager.h"
+#include "Random.h"
 
 
 #include <algorithm>
@@ -75,10 +76,16 @@ void Game::Setup()
 
     //randomly set each state to true or false
 
-    srand(time(NULL));
+    //srand(time(NULL));
+    Random rand;
     for(int i = 1; i < m_windowWidth * m_windowHeight - 1; i++)
     {
-        m_state[i] = rand() % 2;
+        //m_state[i] = rand() % 2;
+        m_state[i] = rand(0,1);
+
+        //print debug states
+        // if(i % 100 == 0)
+        //     printf("State %d = %d\n",i, m_state[i]);
     }
 
     //auto set = [&](int x, int y, )
@@ -136,8 +143,21 @@ void Game::Input()
         {
             switch (sdlEvent.key.keysym.sym)
             {
-                
+                case SDLK_p:
+                {
+                    printf("P pressed\n");
+                    zoomScale += 1.0f;
+                    break;
+                }
+                case SDLK_l:
+                {
+                    printf("L pressed\n");
+                    zoomScale -= 1.0f;
+                    break;
+                }
+
             }
+
         }
 
 
@@ -198,6 +218,13 @@ void Game::Render()
             else
             {
                 sail::ShapeManager::GetInstance().DrawRect(x, y, 1, 1, {0, 0, 0, 255});
+            }
+
+            if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_SPACE))
+            {
+                //system("Pause");
+                //SDL_Delay(100);
+                printf("Space  pressed\n");
             }
         }
     }
