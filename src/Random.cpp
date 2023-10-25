@@ -4,6 +4,7 @@
 
 Random::Random()
 {
+    //comment out to get the same sequence 
     std::random_device rd;
     x = rd();
     y = 362436069;

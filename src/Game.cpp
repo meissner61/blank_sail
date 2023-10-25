@@ -6,6 +6,7 @@
 #include "Timer.h"
 #include "InputManager.h"
 #include "GlyphManager.h"
+#include "Random.h"
 
 
 #include <algorithm>
@@ -61,6 +62,12 @@ if( SDL_Init(SDL_INIT_EVERYTHING) != 0 )
 
 void Game::Setup()
 { 
+    Random rnd;
+    for(int i = 0; i < MAX_NUMS; ++i)
+    {
+        random_nums[i] = rnd(100);
+        printf("Num %i: %i\n", i, random_nums[i]);
+    }
 
     frames = 0;
 
@@ -106,7 +113,7 @@ void Game::Input()
             m_active = false;
         }
 
-        PrintWindowEvents(&sdlEvent);
+        //PrintWindowEvents(&sdlEvent);
 
         if(sdlEvent.type == SDL_WINDOWEVENT)
         {
@@ -155,7 +162,10 @@ void Game::Render()
     SDL_SetRenderDrawColor(m_renderer, 99, 155, 255, 255);
     SDL_RenderClear(m_renderer);
 
-  
+    for(int i = 0; i < MAX_NUMS; ++i)
+    {
+        sail::ShapeManager::GetInstance().DrawRect(i *  size, 0, size, random_nums[i]);
+    }
 
     sail::InputManager::GetInstance().PostUpdate();
     //Stop Drawing stuff here and present 

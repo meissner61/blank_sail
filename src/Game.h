@@ -53,6 +53,12 @@ private:
     SDL_Window* m_window = nullptr;
     SDL_Renderer* m_renderer = nullptr;
 
+    static constexpr int MAX_NUMS = 100;
+    static constexpr int size = 10; //10 pixel bar width
+
+    //std::vector<int> random_nums{MAX_NUMS}; //100 random_nums not initialized, so will be whatever junk is in memory 
+    std::vector<int> random_nums = std::vector<int>(MAX_NUMS, 0); //100 random_nums initialized to 0, Using an In-Class Member Initializer (C++11 and later):
+
     
 
 
