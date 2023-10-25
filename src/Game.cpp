@@ -78,11 +78,13 @@ void Game::Setup()
 
     //srand(time(NULL));
     Random rand;
+
+    //Set whole screen randomly to 0 or 1
     for(int i = 1; i < m_windowWidth * m_windowHeight - 1; i++)
     {
-        //m_state[i] = rand() % 2;
+        //m_state[i] = rand() % 2; //bad rand
         m_state[i] = rand(0,1);
-
+        m_state[i] = 1;
         //print debug states
         // if(i % 100 == 0)
         //     printf("State %d = %d\n",i, m_state[i]);
@@ -146,13 +148,15 @@ void Game::Input()
                 case SDLK_p:
                 {
                     printf("P pressed\n");
-                    zoomScale += 1.0f;
+                    //Random rand;
+                    //m_state[rand(0,m_windowWidth * m_windowHeight)] = 1;
+                    //zoomScale += 1.0f;
                     break;
                 }
                 case SDLK_l:
                 {
                     printf("L pressed\n");
-                    zoomScale -= 1.0f;
+                    //zoomScale -= 1.0f;
                     break;
                 }
 
@@ -163,6 +167,11 @@ void Game::Input()
 
     }
 
+    if(sail::InputManager::GetInstance().IsMousePressed(SDL_BUTTON_LEFT))
+    {
+        printf("Mouse pressed\n");
+    }
+
 
 
 
@@ -170,7 +179,7 @@ void Game::Input()
 
 void Game::Update()
 {
-    SDL_Delay(50);
+    //SDL_Delay(50);
 
     
 }
@@ -192,6 +201,7 @@ void Game::Render()
     for(int i = 0; i < m_windowWidth * m_windowHeight; i++)
     {
         m_output[i] = m_state[i];
+
     }
 
     for(int x = 1; x < m_windowWidth - 1; x++)
@@ -214,10 +224,11 @@ void Game::Render()
             if(cell(x,y) == 1)
             {
                 sail::ShapeManager::GetInstance().DrawRect(x, y, 1, 1, {255, 255, 255, 255});
+                //SDL_RenderDrawPoints()
             }
             else
             {
-                sail::ShapeManager::GetInstance().DrawRect(x, y, 1, 1, {0, 0, 0, 255});
+                //sail::ShapeManager::GetInstance().DrawRect(x, y, 1, 1, {0, 0, 0, 255});
             }
 
             if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_SPACE))

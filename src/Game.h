@@ -55,6 +55,9 @@ private:
     //john conways game of life
     int *m_output;
     int *m_state;
+
+    //SDL_Point points[800 * 600];
+
     
 
 
