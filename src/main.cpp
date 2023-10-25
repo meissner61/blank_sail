@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Util.h"
 #include "extern/glm/vec2.hpp"
+#include "Random.h"
 
 #ifdef _WIN32
 #define NOMINMAX //for <limits> macro inside windows.h conflicts with this header
@@ -48,6 +49,18 @@ int main(int argc, char* argv[])
         std::cout << "See Util.h -> root_path\n";
     }
 
+    Random rand;
+
+    for(int i = 0; i < 100; i++)
+    {
+        int a = rand.Next(-100, 100);
+        std::cout << a << std::endl;
+
+    }
+    
+    
+
+    
 
     Game game;
 
