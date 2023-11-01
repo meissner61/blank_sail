@@ -39,7 +39,7 @@ public:
 
     bool m_active; 
 
-    Shapes shape;
+
 
     Game();
     ~Game();
