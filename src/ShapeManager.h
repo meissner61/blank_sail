@@ -23,6 +23,10 @@ public:
     static void DrawRect(int x, int y, int width, int height, SDL_Color color = {255,0,0,255});//
     static void DrawRectF(float x, float y, float width, float height, SDL_Color color = {255,0,0,255});//
     void DrawCircle(int centerX, int centerY, int radius);//should not be static
+
+    //https://stackoverflow.com/questions/38334081/how-to-draw-circles-arcs-and-vector-graphics-in-sdl
+    void DrawCircleTest(int centerX, int centerY, int radius);
+    
     void DrawMark(int centerX, int centerY, int radius);
     void DrawMarkF(float centerX, float centerY, float radius);
     void DrawLine(int x1, int y1, int x2, int y2);

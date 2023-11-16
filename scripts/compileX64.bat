@@ -14,6 +14,7 @@ set SDL2="C:\libs\SDL2-2.28.1"
 
 ::INCLUDE DIRECTORIES
 set SDL2_INCLUDE="%SDL2%\include"
+set SDL2_GFX_INCLUDE=""
 
 ::LIBRARY DIRECTORIES
 set SDL2_lib="%SDL2%\lib\x64"

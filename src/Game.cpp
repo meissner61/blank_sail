@@ -155,6 +155,8 @@ void Game::Render()
     SDL_SetRenderDrawColor(m_renderer, 99, 155, 255, 255);
     SDL_RenderClear(m_renderer);
 
+    sail::ShapeManager::GetInstance().DrawCircleTest(100,100,20);
+
   
 
     sail::InputManager::GetInstance().PostUpdate();
