@@ -62,6 +62,7 @@ if( SDL_Init(SDL_INIT_EVERYTHING) != 0 )
 
 void Game::Setup()
 { 
+    
     Random rnd;
     for(int i = 0; i < MAX_NUMS; ++i)
     {
@@ -71,6 +72,11 @@ void Game::Setup()
 
     frames = 0;
 
+    for(int i = 0; i < 10; i++)
+    {
+        printf("PPrandos: %d", rnd(-100,100));
+        std::cout << "randos: " <<rnd(-100,100) << std::endl;
+    }
     sail::Timer::Instance().GetLastFrameTime();
 }
 
