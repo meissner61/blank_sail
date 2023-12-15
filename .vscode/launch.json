@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "C/C++: cl.exe build and debug active file",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            // "program": "C:/dev/SAIL/sail_engine/bin/main.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "console": "externalTerminal",
+            "preLaunchTask": "C/C++: cl.exe build active file"
+        }
+    ],
+    "version": "2.0.0"
+}
