@@ -76,19 +76,19 @@ void Ent::Update()
 
         if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_RIGHT))
         {
-            x += speed * sail::Timer::Instance().GetDeltaSeconds();
+            x += speed * sail::Timer::GetDeltaSeconds();
         }
         if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_LEFT))
         {
-            x -= speed * sail::Timer::Instance().GetDeltaSeconds();
+            x -= speed * sail::Timer::GetDeltaSeconds();
         }
         if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_UP))
         {
-            y -= speed * sail::Timer::Instance().GetDeltaSeconds();
+            y -= speed * sail::Timer::GetDeltaSeconds();
         }
         if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_DOWN))
         {
-            y += speed * sail::Timer::Instance().GetDeltaSeconds();
+            y += speed * sail::Timer::GetDeltaSeconds();
         }
 
 

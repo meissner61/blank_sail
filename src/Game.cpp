@@ -64,7 +64,7 @@ void Game::Setup()
 
     frames = 0;
 
-    sail::Timer::Instance().GetLastFrameTime();
+    //sail::Timer::Instance().GetLastFrameTime();
 }
 
 void Game::Run()
@@ -89,12 +89,14 @@ void Game::Input()
 
     //SDL_Delay(25); //~ 30 fps when vsynced to 60 hz
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 // For the Confused:
-    sail::Timer::Instance().GetCurrentFrameTime(); //current frame time done here
-    sail::Timer::Instance().GetDeltaTime(); //calculation done here with currentTime - lastTime
+    sail::Timer::GetCurrentFrameTime(); //current frame time done here
+    sail::Timer::GetDeltaTime(); //calculation done here with currentTime - lastTime
 ///---------------------------------------------------------------------///
-    sail::Timer::Instance().GetLastFrameTime(); //whatever is received here will be used in the next iteration of the loop
+    sail::Timer::GetLastFrameTime(); //whatever is received here will be used in the next iteration of the loop
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

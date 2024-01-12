@@ -19,7 +19,7 @@ Animation::Animation()
 {
     //TODO: Put in some default common animation properties like 32 x 32, and 100speed
     SDL_Log("WARNING: Empty Animation constructor!\n");
-    m_lastStartTime = sail::Timer::Instance().GetAppMilliseconds();
+    m_lastStartTime = sail::Timer::GetAppMilliseconds();
 
 }
 
@@ -29,7 +29,7 @@ Animation::Animation( AnimationInfo info, float frameWidth, float frameHeight, i
     m_height(frameHeight),
     m_speed(speed)
 {
-    m_lastStartTime = sail::Timer::Instance().GetAppMilliseconds();
+    m_lastStartTime = sail::Timer::GetAppMilliseconds();
 
     m_animations[info.animationName].animationName = info.animationName;
     m_animations[info.animationName].frameCount = info.frameCount;
@@ -57,7 +57,7 @@ void Animation::AddAnimation(AnimationInfo info)
 
 void Animation::Play(std::string name, float x, float y, SDL_RendererFlip flip)
 {
-    Uint64 ms = sail::Timer::Instance().GetAppMilliseconds();
+    Uint64 ms = sail::Timer::GetAppMilliseconds();
 
     if(m_currentAnimation != name)
     {

@@ -2,6 +2,8 @@
 
 #include "SDL.h"
 #include <string>
+#include <chrono>
+#include <iostream>
 
 
 
@@ -12,12 +14,19 @@ class Timer
 {
 
 public:
-    static Timer& Instance();
+    Timer();
+    ~Timer();
+    //static Timer& Instance();
 
     void Update();
 
-    Uint64 GetAppMilliseconds();
-    Uint64 GetAppSeconds();
+    static Uint64 GetAppMilliseconds();
+    static Uint64 GetAppSeconds();
+
+    static Uint64 GetAppMicoSeconds();
+
+
+    
 
     //  Timer  //
     Uint64 StartTimer();
@@ -25,20 +34,23 @@ public:
 
     void Reset();//TODO: not defined yet
 
-    float GetFPS(); //TODO: not fully implemented
+    float GetFPS(); //TODO: not fully implemented, should be static
 
-    Uint64 GetLastFrameTime();
-    Uint64 GetCurrentFrameTime();
-    Uint64 GetDeltaTime();
+    static Uint64 GetLastFrameTime();
+    static Uint64 GetCurrentFrameTime();
+    static Uint64 GetDeltaTime();
 
-    float GetDeltaSeconds() const;
+    static float GetDeltaSeconds();
 
 
 private:
 
     Uint64 m_startTimer = 0;
     Uint64 m_endTimer = 0;
-    Uint64 m_currentTimeMS = 0;
+    //Uint64 m_currentTimeMS = 0;
+
+    //static std::chrono::time_point<std::chrono::high_resolution_clock> start; //= std::chrono::high_resolution_clock::now();
+    //static std::chrono::time_point<std::chrono::high_resolution_clock> end;
 
 
     Uint64 m_lastTime = 0;
@@ -47,13 +59,12 @@ private:
     std::string strFPS;
 
 private:
-    Uint64 m_lastFrameTime;
-    Uint64 m_currentFrameTime;
-    Uint64 m_deltaTime;
-    float m_deltaSeconds;
+    static inline Uint64 m_lastFrameTime;
+    static inline Uint64 m_currentFrameTime;
+    static inline Uint64 m_deltaTime;
+    static inline float m_deltaSeconds;
 
-Timer();
-~Timer();
+
     
 
 };

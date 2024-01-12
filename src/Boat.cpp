@@ -8,7 +8,7 @@
 #include <cmath>
 #include <math.h>
 
-#define deltaTime sail::Timer::Instance().GetDeltaSeconds();
+#define deltaTime sail::Timer::GetDeltaSeconds();
 
 using std::round;
 
@@ -105,7 +105,7 @@ void Boat::Input()
 //std::sin((sail::Timer::Instance().GetAppMilliseconds()/500.0)) * 2.0
 void Boat::Render()
 {   
-    Uint64 ms = sail::Timer::Instance().GetAppMilliseconds();
+    Uint64 ms = sail::Timer::GetAppMilliseconds();
 
     //sail::TextureManager::GetInstance().DrawClipF("korl", x, y ,m_width,m_height, m_dir_map[m_lastDirection], 0);
     //sail::TextureManager::GetInstance().DrawClip("korl", int(round(x - m_directionCenter[m_lastDirection].first)), int(round( y - m_directionCenter[m_lastDirection].first)) ,m_width,m_height, m_dir_map[m_lastDirection], 0);
