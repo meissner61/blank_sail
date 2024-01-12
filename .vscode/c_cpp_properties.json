@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/libs/SDL2-2.26.4/include",
+                "C:/libs/SDL2-2.28.3/include",
                 "C:/libs/imgui"
                 // "C:/libs/SDL2_ttf-2.0.18/include",
                 // "C:/libs/SDL2_image-devel-2.0.5-VC/SDL2_image-2.0.5/include",

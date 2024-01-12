@@ -14,7 +14,7 @@ namespace Util
 
     inline std::string root_path = "NONE";
     inline std::filesystem::path working_directory;
-    inline const std::string engine_name = "blank_sail";
+    inline const std::string engine_name = "sail_blank";
 
     //  You can either supply a root directory(TODO), or the system will attempt to backtrack untill it finds it or fails
     inline void InitWorkingDirectory()
