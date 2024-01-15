@@ -176,9 +176,9 @@ void Game::Render()
 
     sail::ShapeManager::GetInstance().DrawCircleTest(100,100,16);
 
-    for(int i = 0; i < 1000; i++)
+    for(int i = 0; i < 100; i++)
     {
-        for(int j = 0; j < 1000; j++)
+        for(int j = 0; j < 100; j++)
         {
             //sail::TextureManager::GetInstance().DrawTextureF("ogre", i * 20,j * 20);
             dstRect = {(float)i * 40, (float)j * 60, (float)width, (float)height};
