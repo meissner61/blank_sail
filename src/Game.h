@@ -2,6 +2,7 @@
 #pragma once
 
 #include "SDL.h"
+//#include "stb_image.h"
  
 #include <string>
 #include <vector>
@@ -10,7 +11,7 @@
 // #include "Camera.h"
 #include "Ent.h"
 
-#include "Boat.h"
+//#include "Boat.h"
 
 class Game
 {
@@ -65,6 +66,11 @@ private:
     uint32_t lastTime = 0;
 
 
+//texture test
+    SDL_Texture* ogre;
+    unsigned char* ogreData = nullptr;
+    int width, height, numChannels = 0;
+    SDL_FRect dstRect;
 
 
     float zoomScale = 1.0f;

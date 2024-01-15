@@ -3,6 +3,8 @@
 //#include "Shapes.h"
 #include "ShapeManager.h"
 #include "TextureManager.h"
+
+#include "stb_image.h"
 #include "Timer.h"
 #include "InputManager.h"
 #include "GlyphManager.h"
@@ -63,6 +65,19 @@ void Game::Setup()
 { 
 
     frames = 0;
+
+    sail::TextureManager::GetInstance().Init(m_renderer);
+
+    sail::TextureManager::GetInstance().LoadTexture(sail::Util::root_path+"/data/ogre.png");
+
+    ogreData = stbi_load("../data/ogre.png", &width, &height, &numChannels, 4);
+
+    ogre = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STATIC, width, height);
+
+    SDL_UpdateTexture(ogre, NULL, ogreData, width * sizeof(unsigned char) * 4);
+    SDL_SetTextureBlendMode(ogre, SDL_BLENDMODE_BLEND);
+
+    stbi_image_free(ogreData);
 
     //sail::Timer::Instance().GetLastFrameTime();
 }
@@ -146,6 +161,8 @@ void Game::Input()
 void Game::Update()
 {
     //SDL_Delay(1);
+    TimeUpdates();
+    calculateFPS();
 
     
 }
@@ -159,7 +176,20 @@ void Game::Render()
 
     sail::ShapeManager::GetInstance().DrawCircleTest(100,100,16);
 
-  
+    for(int i = 0; i < 1000; i++)
+    {
+        for(int j = 0; j < 1000; j++)
+        {
+            //sail::TextureManager::GetInstance().DrawTextureF("ogre", i * 20,j * 20);
+            dstRect = {(float)i * 40, (float)j * 60, (float)width, (float)height};
+            SDL_RenderCopyF(m_renderer, ogre, NULL, &dstRect);
+        }
+    }   
+
+
+
+
+
 
     sail::InputManager::GetInstance().PostUpdate();
     //Stop Drawing stuff here and present 
@@ -173,14 +203,19 @@ void Game::calculateFPS()
 {
     frames++;                                                                                                                                                                          
     //FPS = frames / secondsSinceStart;
-    
+
     if (currentTime > lastTime + 1000) //once per second
     {
-        std::string strFPS;
-        strFPS = std::to_string(frames);
-        std::string titleFPS = "FPS: ";
-        titleFPS += strFPS;
-        SetWindowTitle(titleFPS.c_str());
+        //std::string strFPS;
+        char buffer[20];
+        sprintf(buffer, "%d", frames);
+        const char* frameSTR = buffer;
+
+        // strFPS = std::to_string(frames);
+        // std::string titleFPS = "FPS: ";
+        // titleFPS += strFPS;
+
+        SetWindowTitle(frameSTR);
         frames = 0;
         lastTime = currentTime;
     }
