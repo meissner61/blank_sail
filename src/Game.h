@@ -13,6 +13,8 @@
 
 //#include "Boat.h"
 
+#include "TextureMangr.h"
+
 class Game
 {
 
@@ -64,6 +66,8 @@ private:
     double secondsSinceStart = 0;
     uint32_t currentTime = 0;
     uint32_t lastTime = 0;
+
+    TextureMangr txMnr;
 
 
 //texture test

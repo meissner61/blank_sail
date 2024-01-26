@@ -70,6 +70,8 @@ void Game::Setup()
 
     sail::TextureManager::GetInstance().LoadTexture(sail::Util::root_path+"/data/ogre.png");
 
+    txMnr.LoadTexture(sail::Util::root_path+"/data/ogre.png", m_renderer);
+
     ogreData = stbi_load("../data/ogre.png", &width, &height, &numChannels, 4);
 
     ogre = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STATIC, width, height);
@@ -181,8 +183,10 @@ void Game::Render()
         for(int j = 0; j < 100; j++)
         {
             //sail::TextureManager::GetInstance().DrawTextureF("ogre", i * 20,j * 20);
-            dstRect = {(float)i * 40, (float)j * 60, (float)width, (float)height};
+            dstRect = {(float)i * 40, (float)j * 20, (float)width, (float)height};
             SDL_RenderCopyF(m_renderer, ogre, NULL, &dstRect);
+
+            //txMnr.DrawTexture(m_renderer, 0, i * 20, j * 20);
         }
     }   
 
