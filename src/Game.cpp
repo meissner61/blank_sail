@@ -74,8 +74,8 @@ void Game::Setup()
 
     for(int i = 0; i < 10; i++)
     {
-        printf("PPrandos: %d", rnd(-100,100));
-        std::cout << "randos: " <<rnd(-100,100) << std::endl;
+        printf("PPrandos: %d", (int)rnd((uint32_t)-100,100));
+        std::cout << "randos: " <<(int)rnd((uint32_t)-100,100) << std::endl;
     }
     sail::Timer::Instance().GetLastFrameTime();
 }
@@ -170,7 +170,7 @@ void Game::Render()
 
     for(int i = 0; i < MAX_NUMS; ++i)
     {
-        sail::ShapeManager::GetInstance().DrawRect(i *  size, 0, size, random_nums[i]);
+        sail::ShapeManager::GetInstance().DrawRect(i *  size, 0, size -1, random_nums[i]);
     }
 
     sail::InputManager::GetInstance().PostUpdate();
