@@ -54,6 +54,8 @@ if( SDL_Init(SDL_INIT_EVERYTHING) != 0 )
 
     secondsSinceStart = 1;
 
+    //windowSurface = SDL_GetWindowSurface(m_window);
+
     m_active = true;
 
 }
@@ -63,6 +65,14 @@ void Game::Setup()
 { 
 
     frames = 0;
+
+    loadedSurface = sail::TextureManager::GetInstance().LoadSurface("C:/devop/blank_sail/data/ogre.png");
+
+    SDL_Point whitePixel = findWhitePixel(loadedSurface);
+
+    std::cout << "\n\n-----White pixel found at, (X: "<<whitePixel.x << " Y: " << whitePixel.y << "), Of the image coordinate-----\n\n" << std::endl;
+
+    texture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);
 
     //sail::Timer::Instance().GetLastFrameTime();
 }
@@ -159,9 +169,18 @@ void Game::Render()
 
     sail::ShapeManager::GetInstance().DrawCircleTest(100,100,16);
 
-  
+    // SDL_FillRect(windowSurface, NULL, SDL_MapRGB(windowSurface->format, 255, 255, 255));
 
-    sail::InputManager::GetInstance().PostUpdate();
+    // SDL_BlitSurface(loadedSurface, NULL, windowSurface, NULL);
+
+    SDL_Rect txRect = {10,5,0,0};
+
+    SDL_QueryTexture(texture, NULL, NULL, &txRect.w, &txRect.h);
+
+    SDL_RenderCopy(m_renderer, texture, NULL,&txRect);
+    
+
+    //////sail::InputManager::GetInstance().PostUpdate();
     //Stop Drawing stuff here and present 
     SDL_RenderSetScale(m_renderer, zoomScale, zoomScale);
     //SDL_RenderSetViewport(m_renderer, &viewport);
@@ -291,6 +310,67 @@ void Game::PrintWindowEvents(const SDL_Event *event)
 
         }
     }
+}
+
+Uint32 Game::GetPixel(SDL_Surface *surface, int x, int y)
+{
+    int bpp = surface->format->BytesPerPixel;
+    Uint8* p = static_cast<Uint8*>(surface->pixels) + y * surface->pitch + x * bpp;
+
+    switch (bpp)
+    {
+        case 1:
+        {
+            return *p;
+        }
+        case 2:
+        {
+            return *reinterpret_cast<Uint16*>(p);
+        }
+        case 3:
+        {
+            if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
+            {
+                return p[0] << 16 | p[1] << 8 | p[2];
+            }
+            else
+            {
+                return p[0] | p[1] << 8 | p[2] << 16;
+            }
+        }
+        case 4:
+        {
+            return *reinterpret_cast<Uint32*>(p);
+        }
+        default:
+            return 0; //shouldnt happen but avoids warnings
+    }
+}
+
+SDL_Point Game::findWhitePixel(SDL_Surface *surface)
+{
+    SDL_Point whitePixel = {-1,-1}; //default if no white pixel found
+
+    for(int y = 0; y < surface->h; ++y)
+    {
+        for(int x = 0; x < surface->w; ++x)
+        {
+            Uint32 pixel = GetPixel(surface, x, y);
+
+            Uint8 r, g, b;
+
+            SDL_GetRGB(pixel, surface->format, &r, &g, &b);
+
+            if(r == 255 && g == 255 && b == 255)
+            {
+                whitePixel.x = x;
+                whitePixel.y = y;
+                return whitePixel;
+            }
+        }
+    }
+
+    return whitePixel;
 }
 
 SDL_Renderer* Game::GetRenderer()

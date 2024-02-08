@@ -66,6 +66,48 @@ void TextureManager::LoadTexture( std::string filename)
     std::cout <<"Here be the m_texture size: " << m_textures.size() << "\n";
 }
 
+SDL_Surface* sail::TextureManager::LoadSurface(std::string filename)
+{
+    int width, height, numChannels;
+    unsigned char* imageData = stbi_load(filename.c_str(), &width, &height, &numChannels, 4); //force RGBA format
+
+    if (imageData == nullptr)
+    {
+        SDL_Log("stbi_load() Failed: &s\n", stbi_failure_reason());
+        return nullptr;
+    }
+
+    #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+        Uint32 rmask = 0xff000000;
+        Uint32 gmask = 0x00ff0000;
+        Uint32 bmask = 0x0000ff00;
+        Uint32 amask = 0x000000ff;
+    #else //little endian
+        Uint32 rmask = 0x000000ff;
+        Uint32 gmask = 0x0000ff00;
+        Uint32 bmask = 0x00ff0000;
+        Uint32 amask = 0xff000000; 
+    #endif  
+
+    SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(imageData, width, height, 32, width * 4, rmask, gmask, bmask, amask);
+
+    if(surface == nullptr)
+    {
+        SDL_Log("SDL_CreateRGBSurfaceFrom() Failed: %s\n", SDL_GetError());
+        stbi_image_free(imageData);
+        return nullptr;
+    }
+
+        // The surface is now created, but be aware that SDL_CreateRGBSurfaceFrom() won't free the imageData when it's done.
+    // You need to keep it until you are done with the surface.
+    // When you're ready to release the surface (with SDL_FreeSurface()), also call stbi_image_free(imageData).
+
+    return surface;
+
+
+
+}
+
 /*
 NOTE:
     I want to have a method for checking whether a texture id that i am trying to draw is part of the 

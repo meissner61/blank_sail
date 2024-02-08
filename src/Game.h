@@ -33,6 +33,10 @@ public:
 
     void SetWindowTitle(const char* newTitle);
     void PrintWindowEvents(const SDL_Event* event);
+
+    Uint32 GetPixel(SDL_Surface* surface, int x, int y);
+    SDL_Point findWhitePixel(SDL_Surface* surface);
+
     
 
     SDL_Renderer* GetRenderer();
@@ -47,10 +51,15 @@ public:
 
 private:
 
+    SDL_Surface* loadedSurface;
+
+    SDL_Texture* texture;
+
     int m_windowWidth = 800;
     int m_windowHeight = 600;
 
     SDL_Window* m_window = nullptr;
+    //SDL_Surface* windowSurface = nullptr;
     SDL_Renderer* m_renderer = nullptr;
 
     

@@ -36,6 +36,7 @@ or other means of indication.
 
 */
     void LoadTexture( std::string filename); //loads texture, stripped filename used as name
+    SDL_Surface* LoadSurface(std::string filename);
     void LoadandName(std::string filename, std::string idName); // load texture + give it a unique name
 
     //TODO: think about adding if know a width and height, so that the error rect can be scaled accordingly
