@@ -50,6 +50,8 @@ if( SDL_Init(SDL_INIT_EVERYTHING) != 0 )
         return;
     }
 
+
+
     sail::ShapeManager::GetInstance().Init(m_renderer);
 
     secondsSinceStart = 1;
@@ -70,9 +72,30 @@ void Game::Setup()
 
     SDL_Point whitePixel = findWhitePixel(loadedSurface);
 
+    obj1attaX = whitePixel.x;
+    obj1attaY = whitePixel.y;
+
     std::cout << "\n\n-----White pixel found at, (X: "<<whitePixel.x << " Y: " << whitePixel.y << "), Of the image coordinate-----\n\n" << std::endl;
 
     texture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);
+
+    loadedSurface2 = sail::TextureManager::GetInstance().LoadSurface("C:/devop/blank_sail/data/helm.png");
+    SDL_Point whitePixel2 = findWhitePixel(loadedSurface2);
+
+    obj2attaX = whitePixel2.x;
+    obj2attaY = whitePixel2.y;
+
+    std::cout << "\n\n--second White pixel found at, (X: "<<whitePixel2.x << " Y: " << whitePixel2.y << "), Of the image coordinate--\n\n" << std::endl;
+
+    texture2 = SDL_CreateTextureFromSurface(m_renderer, loadedSurface2);
+
+    obj2X = (obj1X) - (obj2attaX - obj1attaX);
+
+    obj2Y = (obj1Y) - (obj2attaY - obj1attaY);
+
+//    obj2X = obj1X;
+//    obj2Y = obj1Y;
+
 
     //sail::Timer::Instance().GetLastFrameTime();
 }
@@ -167,17 +190,23 @@ void Game::Render()
     SDL_SetRenderDrawColor(m_renderer, 99, 155, 255, 255);
     SDL_RenderClear(m_renderer);
 
-    sail::ShapeManager::GetInstance().DrawCircleTest(100,100,16);
+    //sail::ShapeManager::GetInstance().DrawCircleTest(100,100,16);
 
     // SDL_FillRect(windowSurface, NULL, SDL_MapRGB(windowSurface->format, 255, 255, 255));
 
     // SDL_BlitSurface(loadedSurface, NULL, windowSurface, NULL);
 
-    SDL_Rect txRect = {10,5,0,0};
+    SDL_Rect txRect = {obj1X,obj1Y,0,0};
 
     SDL_QueryTexture(texture, NULL, NULL, &txRect.w, &txRect.h);
 
     SDL_RenderCopy(m_renderer, texture, NULL,&txRect);
+
+    SDL_Rect txRect2 = {obj2X, obj2Y, 0,0};
+
+    SDL_QueryTexture(texture2, NULL, NULL, &txRect2.w, &txRect2.h);
+
+    SDL_RenderCopy(m_renderer, texture2, NULL,&txRect2);
     
 
     //////sail::InputManager::GetInstance().PostUpdate();

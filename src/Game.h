@@ -53,7 +53,11 @@ private:
 
     SDL_Surface* loadedSurface;
 
+    SDL_Surface* loadedSurface2;
+
     SDL_Texture* texture;
+
+    SDL_Texture* texture2;
 
     int m_windowWidth = 800;
     int m_windowHeight = 600;
@@ -62,7 +66,18 @@ private:
     //SDL_Surface* windowSurface = nullptr;
     SDL_Renderer* m_renderer = nullptr;
 
-    
+    int obj1X = 200;
+    int obj1Y = 300;
+
+    int obj1attaX;
+    int obj1attaY;
+
+    int obj2X = 0;
+    int obj2Y = 500;
+
+    int obj2attaX;
+    int obj2attaY;
+
 
 
     ////Timers, frames, e.t.c////
