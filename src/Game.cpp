@@ -6,7 +6,7 @@
 #include "Timer.h"
 #include "InputManager.h"
 #include "GlyphManager.h"
-
+#include "ShapeManager.h"
 
 #include <algorithm>
 #include <iostream>
@@ -205,6 +205,8 @@ void Game::Render()
     SDL_Rect txRect2 = {obj2X, obj2Y, 0,0};
 
     SDL_QueryTexture(texture2, NULL, NULL, &txRect2.w, &txRect2.h);
+
+    DrawCircleTest(100,100,100);
 
     SDL_RenderCopy(m_renderer, texture2, NULL,&txRect2);
     
