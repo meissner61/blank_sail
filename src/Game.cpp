@@ -206,7 +206,7 @@ void Game::Render()
 
     SDL_QueryTexture(texture2, NULL, NULL, &txRect2.w, &txRect2.h);
 
-    DrawCircleTest(100,100,100);
+    //DrawCircleTest(100,100,100);
 
     SDL_RenderCopy(m_renderer, texture2, NULL,&txRect2);
     
