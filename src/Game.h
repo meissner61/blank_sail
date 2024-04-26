@@ -12,6 +12,15 @@
 
 #include "Boat.h"
 
+
+struct Entity
+{
+    int x;
+    int y;
+    SDL_Texture* texure;
+};
+
+
 class Game
 {
 
@@ -33,6 +42,9 @@ public:
 
     void SetWindowTitle(const char* newTitle);
     void PrintWindowEvents(const SDL_Event* event);
+
+    SDL_Texture* LoadTexture(std::string filename);
+    void Blit(SDL_Texture* texture, int x, int y);
     
 
     SDL_Renderer* GetRenderer();
@@ -63,6 +75,8 @@ private:
     double secondsSinceStart = 0;
     uint32_t currentTime = 0;
     uint32_t lastTime = 0;
+
+    Entity player;
 
 
 

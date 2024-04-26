@@ -39,19 +39,20 @@ void TextureManager::LoadTexture( std::string filename)
     imageData = stbi_load(filename.c_str(), &width, &height, &numChannels, 4); //TODO: RESEARCH THIS, stbi_load(x,x,x,x,int req_comp = 0 or 4) used to be 0 which didnt work with 8BPP
     if(imageData == nullptr)
     {
-        SDL_Log("stbi_load() Failed: %s\n", stbi_failure_reason());
+        puts("BADD STUFF");
+        SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "stbi_load() Failed!\n  Filename: %s, Reason: %s",filename.c_str(), stbi_failure_reason());
     }
 
 
     SDL_Texture* l_texture = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STATIC, width, height);
     if(l_texture == nullptr)
     {
-        SDL_Log("Error with SDL_CreateTexture(): %s", SDL_GetError());
+        SDL_Log("Error with function SDL_CreateTexture(): %s", SDL_GetError());
     }
 
     if (SDL_UpdateTexture(l_texture, NULL, imageData, width * sizeof(unsigned char) * 4) != 0)
     {
-        SDL_Log("Error with SDL_UpdateTexture(): %s", SDL_GetError());
+        SDL_Log("Error with filename:%s \n SDL_UpdateTexture(): %s",filename.c_str(), SDL_GetError());
     }
 
 
@@ -189,7 +190,13 @@ void TextureManager::UpdateTextureAlpha(const std::string& id, Uint8 alphaValue)
 
 SDL_Texture *sail::TextureManager::GetTexture(const std::string& id)
 {
-    return m_textures[id];
+    auto it = m_textures.find(id);
+    if (it != m_textures.end()) {
+        return it->second;
+    } else {
+        SDL_Log("Texture with ID %s not found.", id.c_str());
+        return nullptr; // Return nullptr if not found
+    }
 }
 
 void sail::TextureManager::HandleMissingTexture(const std::string &id, float x, float y)

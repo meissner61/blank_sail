@@ -51,6 +51,7 @@ if( SDL_Init(SDL_INIT_EVERYTHING) != 0 )
     }
 
     sail::ShapeManager::GetInstance().Init(m_renderer);
+    sail::TextureManager::GetInstance().Init(m_renderer);
 
     secondsSinceStart = 1;
 
@@ -63,6 +64,16 @@ void Game::Setup()
 { 
 
     frames = 0;
+
+
+
+    
+
+    player.texure = LoadTexture("../data/ogre.png");
+    player.x = 0;
+    player.y = 0;
+
+
 
     //sail::Timer::Instance().GetLastFrameTime();
 }
@@ -108,7 +119,7 @@ void Game::Input()
             m_active = false;
         }
 
-        PrintWindowEvents(&sdlEvent);
+        //PrintWindowEvents(&sdlEvent);
 
         if(sdlEvent.type == SDL_WINDOWEVENT)
         {
@@ -127,13 +138,13 @@ void Game::Input()
         }
 
       
-        if(sdlEvent.type == SDL_KEYDOWN)
-        {
-            switch (sdlEvent.key.keysym.sym)
-            {
+        // if(sdlEvent.type == SDL_KEYDOWN)
+        // {
+        //     switch (sdlEvent.key.keysym.sym)
+        //     {
                 
-            }
-        }
+        //     }
+        // }
 
 
     }
@@ -159,7 +170,8 @@ void Game::Render()
 
     sail::ShapeManager::GetInstance().DrawCircleTest(100,100,16);
 
-  
+    Blit(player.texure, player.x, player.y);
+
 
     sail::InputManager::GetInstance().PostUpdate();
     //Stop Drawing stuff here and present 
@@ -291,6 +303,32 @@ void Game::PrintWindowEvents(const SDL_Event *event)
 
         }
     }
+}
+
+SDL_Texture *Game::LoadTexture(std::string filename)
+{
+    SDL_Texture* texture;
+
+    SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "LOAD_TEXTURE() Loading %s", filename.c_str());
+
+    sail::TextureManager::GetInstance().LoadTexture(filename);
+
+    std::string file = sail::TextureManager::GetInstance().StripFileNameExtension(filename);
+
+    texture = sail::TextureManager::GetInstance().GetTexture(file);
+
+    return texture;
+}
+
+void Game::Blit(SDL_Texture *texture, int x, int y)
+{
+    SDL_Rect rect;
+
+    rect.x = x;
+    rect.y = y;
+    SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+
+    SDL_RenderCopy(m_renderer, texture, NULL, &rect);
 }
 
 SDL_Renderer* Game::GetRenderer()

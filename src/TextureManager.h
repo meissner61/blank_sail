@@ -52,6 +52,7 @@ or other means of indication.
     void GetTextureDimensions(const std::string& id);
 
     void HandleMissingTexture(const std::string& id, float x, float y);
+    std::string StripFileNameExtension(std::string& fileName);
 
 //Test//
 
@@ -60,7 +61,6 @@ or other means of indication.
 
 private:
 
-    std::string StripFileNameExtension(std::string& fileName);
 
     TextureManager();
     ~TextureManager() {}
