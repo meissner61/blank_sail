@@ -170,6 +170,23 @@ void Game::Render()
 
     sail::ShapeManager::GetInstance().DrawCircleTest(100,100,16);
 
+    if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_W))
+    {
+        player.y -= 1;
+    }
+    if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_S))
+    {
+        player.y += 1;
+    }
+    if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_D))
+    {
+        player.x += 1;
+    }
+    if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_A))
+    {
+        player.x -= 1;
+    }
+
     Blit(player.texure, player.x, player.y);
 
 
