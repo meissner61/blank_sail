@@ -17,6 +17,9 @@ struct Entity
 {
     int x;
     int y;
+    int dx;
+    int dy;
+    int health;
     SDL_Texture* texure;
 };
 
@@ -77,6 +80,7 @@ private:
     uint32_t lastTime = 0;
 
     Entity player;
+    Entity bullet;
 
 
 

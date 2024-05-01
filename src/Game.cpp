@@ -73,6 +73,14 @@ void Game::Setup()
     player.x = 0;
     player.y = 0;
 
+    bullet.texure = LoadTexture("../data/bullet.png");
+    bullet.x = player.x;
+    bullet.y = player.y;
+    bullet.dx = 0;
+    bullet.dy = 0;
+    bullet.health = 0;
+
+
 
 
     //sail::Timer::Instance().GetLastFrameTime();
@@ -98,7 +106,7 @@ void Game::Input()
 
     SDL_Event sdlEvent;
 
-    //SDL_Delay(25); //~ 30 fps when vsynced to 60 hz
+    SDL_Delay(16); //~ 30 fps when vsynced to 60 hz
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // For the Confused:
@@ -188,6 +196,30 @@ void Game::Render()
     }
 
     Blit(player.texure, player.x, player.y);
+
+
+    if(sail::InputManager::GetInstance().IsMousePressed(SDL_BUTTON_LEFT))
+    {
+        bullet.x = player.x;
+        bullet.y = player.y;
+
+        bullet.dx = 16;
+        bullet.dy = 0;
+
+        bullet.health = 1;
+    }   
+
+    bullet.x += bullet.dx;
+    bullet.y += bullet.dy;
+
+
+
+    if(bullet.health > 0)
+    {
+        Blit(bullet.texure, bullet.x, bullet.y);
+    }
+
+    //Blit(bullet.texure, bullet.x, bullet.y);    
 
 
     sail::InputManager::GetInstance().PostUpdate();
