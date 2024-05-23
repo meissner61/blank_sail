@@ -90,7 +90,6 @@ void Game::Setup()
     texture2 = SDL_CreateTextureFromSurface(m_renderer, loadedSurface2);
 
     obj2X = (obj1X) - (obj2attaX - obj1attaX);
-
     obj2Y = (obj1Y) - (obj2attaY - obj1attaY);
 
 //    obj2X = obj1X;
@@ -180,6 +179,19 @@ void Game::Update()
 {
     //SDL_Delay(1);
 
+
+    if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_D))
+    {
+        obj1X += 1;
+    }
+    if(sail::InputManager::GetInstance().IsKeyDown(SDL_SCANCODE_A))
+    {
+        obj1X -=1;
+    }
+
+
+    obj2X = (obj1X) - (obj2attaX - obj1attaX);
+    obj2Y = (obj1Y) - (obj2attaY - obj1attaY);
     
 }
 
@@ -200,7 +212,7 @@ void Game::Render()
 
     SDL_QueryTexture(texture, NULL, NULL, &txRect.w, &txRect.h);
 
-    SDL_RenderCopy(m_renderer, texture, NULL,&txRect);
+    SDL_RenderCopyEx(m_renderer, texture, NULL,&txRect, NULL, NULL, SDL_FLIP_HORIZONTAL);
 
     SDL_Rect txRect2 = {obj2X, obj2Y, 0,0};
 
