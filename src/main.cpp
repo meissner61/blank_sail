@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     {
         std::cout << "32-bit architecture..\n";
     }
-    __debugbreak();
+    //__debugbreak();
 
     sail::Util::FindRootEnginePath();
 
