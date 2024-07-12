@@ -2,10 +2,12 @@
 #include <iostream>
 #include <algorithm>
 
-#include "Game.h"
+//#include "Game.h"
 #include "Util.h"
 #include "extern/glm/vec2.hpp"
 #include "Random.h"
+
+#include "SDL.h"
 
 #ifdef _WIN32
 #define NOMINMAX //for <limits> macro inside windows.h conflicts with this header
@@ -16,6 +18,26 @@
 
 #include <limits>
 #include <iomanip>
+
+bool InitSDL(SDL_Window** window, SDL_Renderer** renderer) {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
+        return false;
+    }
+    *window = SDL_CreateWindow("Screen Wrapping", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
+    if (*window == nullptr) {
+        std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
+        return false;
+    }
+    *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
+    if (*renderer == nullptr) {
+        std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
+        return false;
+    }
+    SDL_SetRenderDrawColor(*renderer, 255, 255, 255, 255); // Set background color
+    return true;
+}
+
 
 
 int main(int argc, char* argv[])
@@ -50,14 +72,22 @@ int main(int argc, char* argv[])
     }
 
 
+    SDL_Window* window = nullptr;
+    SDL_Renderer* renderer = nullptr;
+
+    if (!InitSDL(&window, &renderer)) {
+        std::cerr << "Failed to initialize!" << std::endl;
+        return -1;
+    }
+
     
     
 
     
 
-    Game game;
+    // Game game;
 
-    game.Run();
+    // game.Run();
 
     return 0;
 }

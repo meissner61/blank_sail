@@ -7,7 +7,7 @@
 #pragma warning(pop)
 
 #include <filesystem>
-#include "Game.h"
+//#include "Game.h"
 #include <iostream>
 
 //TODO: Just for a test remove timer
