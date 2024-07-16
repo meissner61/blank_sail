@@ -12,6 +12,8 @@
 
 #include "Boat.h"
 
+#include "TileMap.h"
+
 class Game
 {
 
@@ -54,7 +56,7 @@ private:
     SDL_Renderer* m_renderer = nullptr;
 
     
-
+    TileMap testMap;
 
     ////Timers, frames, e.t.c////
     uint64_t frames = 0;

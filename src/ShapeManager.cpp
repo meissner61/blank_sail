@@ -58,6 +58,22 @@ void sail::ShapeManager::DrawRect(int x, int y, int width, int height, SDL_Color
     SDL_RenderFillRect(m_renderer, &rect);
 }
 
+void sail::ShapeManager::DrawRectOutline(int x, int y, int width, int height, SDL_Color color)
+{
+    static bool oneTimeWarning = false; // TODO: might want to use spdlog, put errors into error array, and stream one at a time 
+    if(m_renderer == nullptr && oneTimeWarning == false)
+    {
+        SDL_Log("ShapeManager ERROR: NO INSTANCE");
+        oneTimeWarning = true;
+
+    }
+
+
+    SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
+    SDL_Rect rect = {x, y, width, height};
+    SDL_RenderDrawRect(m_renderer, &rect);
+}
+
 void sail::ShapeManager::DrawRectF(float x, float y, float width, float height, SDL_Color color)
 {
     static bool oneTimeWarning = false; // TODO: might want to use spdlog, put errors into error array, and stream one at a time 

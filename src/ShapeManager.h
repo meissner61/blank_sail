@@ -21,6 +21,7 @@ public:
     */
 
     static void DrawRect(int x, int y, int width, int height, SDL_Color color = {255,0,0,255});//
+    static void DrawRectOutline(int x, int y, int width, int height, SDL_Color color = {255,0,0,255});
     static void DrawRectF(float x, float y, float width, float height, SDL_Color color = {255,0,0,255});//
     void DrawCircle(int centerX, int centerY, int radius);//should not be static
 

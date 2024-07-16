@@ -159,7 +159,7 @@ void Game::Render()
 
     sail::ShapeManager::GetInstance().DrawCircleTest(100,100,16);
 
-  
+    testMap.Draw();
 
     sail::InputManager::GetInstance().PostUpdate();
     //Stop Drawing stuff here and present 
