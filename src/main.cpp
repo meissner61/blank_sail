@@ -19,6 +19,24 @@
 #include <limits>
 #include <iomanip>
 
+
+// Screen dimensions
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
+
+// Function to draw a filled circle (Bresenham's Midpoint Circle Algorithm)
+void DrawFilledCircle(SDL_Renderer* renderer, int cx, int cy, int radius) {
+    for (int w = 0; w < radius * 2; w++) {
+        for (int h = 0; h < radius * 2; h++) {
+            int dx = radius - w; // Horizontal offset
+            int dy = radius - h; // Vertical offset
+            if ((dx * dx + dy * dy) <= (radius * radius)) {
+                SDL_RenderDrawPoint(renderer, cx + dx, cy + dy);
+            }
+        }
+    }
+}
+
 bool InitSDL(SDL_Window** window, SDL_Renderer** renderer) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
@@ -81,7 +99,7 @@ int main(int argc, char* argv[])
     }
 
     
-    
+    std::getchar();
 
     
 
